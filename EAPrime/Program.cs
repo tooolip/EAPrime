@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EAPrime
 {
@@ -15,6 +11,11 @@ namespace EAPrime
 
             // Step: We process all of our program's arguments.
             Arguments arguments = new Arguments(args);
+            if (arguments.helpEnabled())
+            {
+                arguments.printHelp();
+                return;
+            }
             if (arguments.getFilepath().Equals("empty"))
             {
                 Console.WriteLine("Error: No file specified. Exiting.");
@@ -31,12 +32,21 @@ namespace EAPrime
             // Step: We print out the prime factorization for each value.
             PrimeFactorCalculator pfc = new PrimeFactorCalculator();
             ArrayList values = fp.getInputList();
+
+            // Print title if enabled.
+            if (arguments.printoutEnabled())
+                arguments.printTitle();
             foreach (int value in values)
             {
+                // Print head.
                 Console.Write(value + " : ");
+
                 ArrayList primeFactors = pfc.getPrimeFactors(value);
+                // Print actual trailing list.
                 for (int i = 0; i < primeFactors.Count - 1; i++)
                     Console.Write(primeFactors[i] + ", ");
+
+                // Print final value without trailing comma.
                 if (primeFactors.Count > 0)
                     Console.Write(primeFactors[primeFactors.Count - 1]);
                 Console.WriteLine();

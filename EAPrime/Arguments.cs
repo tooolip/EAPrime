@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EAPrime
 {
@@ -13,8 +10,10 @@ namespace EAPrime
 
         public Arguments(string[] args)
         {
+            // Initialize dictionary with all possible flags.
             argDict.Add("-d", "empty");
             argDict.Add("-p", "0");
+            argDict.Add("-h", "0");
 
             for (int i = 0; i < args.Length; i++)
             {
@@ -45,8 +44,13 @@ namespace EAPrime
                                 argDict["-d"] = "empty";
                             }
                             break;
+                        // Flag "-p" indicates that title printout is enabled.
                         case 'p':
                             argDict["-p"] = "1";
+                            break;
+                        // Flag "-h" indicates that user wants help guide.
+                        case 'h':
+                            argDict["-h"] = "1";
                             break;
                         case 'a': // debug, a,b,c are not real flags.
                         case 'b': // debug
@@ -54,6 +58,7 @@ namespace EAPrime
                             argDict.Add(args[i], args[i]);
                             break;
                         default:
+                            Console.WriteLine("Warning: Unrecognized flag.");
                             break;
                     }
                 }
@@ -73,6 +78,27 @@ namespace EAPrime
         public bool printoutEnabled()
         {
             return argDict["-p"].Equals("1");
+        }
+
+        public void printTitle()
+        {
+            Console.WriteLine(" ___  ___  ___       _             ");
+            Console.WriteLine("| __|/   \\| _ \\ _ _ (_) _ __   ___ ");
+            Console.WriteLine("| _| | - ||  _/| '_|| || '  \\ / -_)");
+            Console.WriteLine("|___||_|_||_|  |_|  |_||_|_|_|\\___|\n");
+        }
+
+        public bool helpEnabled()
+        {
+            return argDict["-h"].Equals("1");
+        }
+
+        public void printHelp()
+        {
+            Console.WriteLine("Usage:\n");
+            Console.WriteLine("-d [filepath]\tSpecifies file to be read.");
+            Console.WriteLine("-p\t\tPrints out fancy title.");
+            Console.WriteLine("-h\t\tShows optional flags and their usage.");
         }
     }
 }

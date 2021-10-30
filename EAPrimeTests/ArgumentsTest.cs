@@ -18,7 +18,7 @@ namespace EAPrimeTests
             _arguments = new Arguments(args);
 
             int result = _arguments.getArgumentCount();
-            Assert.AreEqual(result, 5);
+            Assert.AreEqual(result, 6);
         }
 
         [Test]
@@ -58,6 +58,16 @@ namespace EAPrimeTests
             _arguments = new Arguments(args);
 
             bool result = _arguments.printoutEnabled();
+            Assert.AreEqual(result, true);
+        }
+
+        [Test]
+        public void Test_HelpEnabled()
+        {
+            string[] args = { "-h" };
+            _arguments = new Arguments(args);
+
+            bool result = _arguments.helpEnabled();
             Assert.AreEqual(result, true);
         }
     }
